@@ -1,8 +1,6 @@
 var express = require("express"),
   path = require("path"),
   config = require("./config"),
-  async = require("async"),
-  gpio = require("pi-gpio"),
   app = express();
 
 const { pressButton } = require("./door");
@@ -10,12 +8,6 @@ const { pressButton } = require("./door");
 app.set("port", process.env.PORT || 3000);
 
 app.use("/", express.static(__dirname + "/public"));
-
-function delayPinWrite(pin, value, callback) {
-  setTimeout(function () {
-    gpio.write(pin, value, callback);
-  }, config.RELAY_TIMEOUT);
-}
 
 app.get("/api/ping", function (req, res) {
   res.json("pong");

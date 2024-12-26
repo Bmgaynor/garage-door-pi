@@ -1,16 +1,5 @@
 const config = require("./config");
-
-async function writePin({ pin, direction }) {
-  return new Promise((resolve, reject) => {
-    gpio.write(pin, direction, (err, next) => {
-      if (err) {
-        return reject(err);
-      } else {
-        return resolve(next);
-      }
-    });
-  });
-}
+var gpiop = require("rpi-gpio").promise;
 
 async function wait(ms) {
   return new Promise((resolve) => {
@@ -19,11 +8,14 @@ async function wait(ms) {
     }, ms);
   });
 }
+
 async function pressButton() {
   try {
-    await writePin(config.GARAGE_PIN, config.RELAY_ON);
+    await gpiop.setup(config.GARAGE_PIN, gpiop.DIR_OUT);
+    await gpiop.write(config.GARAGE_PIN, config.RELAY_ON);
+    // await writePin(config.GARAGE_PIN, config.RELAY_ON);
     await wait(config.RELAY_TIMEOUT);
-    await writePin(config.GARAGE_PIN, config.RELAY_OFF);
+    await gpiop.write(config.GARAGE_PIN, config.RELAY_OFF);
   } catch (err) {
     console.error(err);
   }

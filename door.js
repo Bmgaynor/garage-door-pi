@@ -12,10 +12,14 @@ async function wait(ms) {
 async function pressButton() {
   try {
     await gpiop.setup(config.GARAGE_PIN, gpiop.DIR_OUT);
+    console.log("set up complete");
     await gpiop.write(config.GARAGE_PIN, true);
+    console.log("it on");
     // await writePin(config.GARAGE_PIN, config.RELAY_ON);
     await wait(config.RELAY_TIMEOUT);
+
     await gpiop.write(config.GARAGE_PIN, false);
+    console.log("it off");
   } catch (err) {
     console.error(err);
   }

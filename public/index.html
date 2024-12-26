@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Nycum's Garage</title>
+	<title>Garage</title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimal-ui">
 	<link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
 	<style>
@@ -29,10 +29,7 @@
 	</style>
 </head>
 <body>
-	<button onclick="openLeft()">Left Garage</button>
-	<button onclick="openRight()">Right Garage</button>
-	<button onclick="openBoth()">Both Garages</button>
-
+	<button onclick="open()">Open Garage</button>
 	<script>
 
 	function post(url) {
@@ -42,11 +39,7 @@
 		request.send({});
 	}
 
-	function openLeft() { post("/api/garage/left"); }
-
-	function openRight() { post("/api/garage/right"); }
-
-	function openBoth() { post("/api/garage/both"); }
+	function open() { post("/api/press"); }
 
 	</script>
 

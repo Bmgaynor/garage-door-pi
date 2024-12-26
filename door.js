@@ -12,7 +12,7 @@ async function wait(ms) {
 async function pressButton() {
   try {
     gpiop
-      .setup(26, gpiop.DIR_OUT)
+      .setup(26, "out")
       .then(() => {
         return gpiop.write(26, true);
       })

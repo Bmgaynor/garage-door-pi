@@ -18,9 +18,21 @@ async function wait(ms) {
   });
 }
 
-async function writePin({ pin, direction }) {
+async function writePin({ pin, value }) {
   return new Promise((resolve, reject) => {
-    gpio.write(pin, direction, (err, next) => {
+    gpio.write(pin, value, (err, next) => {
+      if (err) {
+        return reject(err);
+      } else {
+        return resolve(next);
+      }
+    });
+  });
+}
+
+async function openPin({ pin, direction }) {
+  return new Promise((resolve, reject) => {
+    gpio.open(pin, direction, (err, next) => {
       if (err) {
         return reject(err);
       } else {
@@ -32,9 +44,13 @@ async function writePin({ pin, direction }) {
 
 async function main() {
   try {
-    await writePin(26, 1);
+    await openPin({
+      pin: 26,
+      direction: "output",
+    });
+    await writePin({ pin: 26, value: 1 });
     await wait(500);
-    await writePin(26, 0);
+    await writePin({ pin: 26, value: 0 });
   } catch (err) {
     console.error(err);
   }
